@@ -1,38 +1,186 @@
-.App {
-  text-align: center;
+/* reset css */
+
+h1, h2, h3, h4, h5 {
+  padding: 0;
+  margin: 0;
+}
+p {
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.float-right {
+  float: right;
+}
+/* layout and page */
+
+.app {
+  background-color: #f9f9f9;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.page {
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px rgba(115, 115, 115, 0.08);
+  width: 874px;
+  margin: 0 auto;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.setting {
+  position: fixed;
+  top: 24px;
+  right: 12px;
+  width: 120px;
+  text-align: right;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* common css for both mode */
+
+.write-mode .note-item:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+.page .note-item .content-row {
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+}
+.page .note-item .content-row .btn {
+  display: none;
+}
+.page .note-item .content-row:hover .btn {
+  display: inline;
+}
+.page .note-item .content-row.deleted {
+  text-decoration: line-through;
+  color: #999;
+}
+.page .note-item .content-row span {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.write-mode .loading-banner {
+  text-align: center;
+  padding: 24px 0 0;
+}
+
+.page .edit-zone {
+  margin-bottom: 12px;
+  padding: 24px 24px 0;
+  position: relative;
+}
+.page .edit-zone input {
+  /* TODO how it distrube with button each other */
+  vertical-align: top;
+  min-height: 41px;
+}
+.page .edit-zone input,
+.page .edit-zone textarea {
+  /* text-indent: 60px; */
+  border: 1px solid #e8e8e8;
+  outline: none;
+  padding: 6px 12px 6px;
+  box-sizing: border-box;
+  word-break: break-all;
+  line-height: 27px;
+}
+
+.page .edit-zone select,
+.page .edit-zone option {
+  color: #999;
+  width: 60px;
+  height: 39px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  outline: none;
+  border: none;
+}
+.page .edit-zone input {
+  width: 85%;
+}
+.page .edit-zone textarea {
+  width: 100%;
+  min-height: 68px;
+}
+.page .edit-zone button {
+  margin: 12px 0 0 12px;
+}
+
+.write-mode .note-item {
+  padding: 0 24px;
+}
+.gather-mode {
+  padding-top: 24px;
+}
+.gather-mode .date-section {
+  padding: 12px 12px 12px 24px;
+}
+.gather-mode .nodate-section {
+  padding-left: 12px;
+}
+.write-mode .note-item .btn {
+  display: none;
+}
+.write-mode .note-item:hover .btn {
+  display: inline;
+  cursor: pointer;
+}
+.write-mode .note-item .desc-row,
+.page .notice {
+  font-size: 0.8em;
+  color: #999;
+  padding: 12px 0 6px;
+}
+.write-mode .note-item .desc-row .operation {
+  float: right;
+}
+.write-mode .note-item .desc-row .operation .del {
+  color: red;
+}
+
+.write-mode .note-item .content-row {
+  border-top: 1px solid #f5f5f5;
+  padding: 4px 0 8px;
+
+}
+.gather-mode.all-cates .cate-note-list {
+  padding: 12px 24px 0 12px;
+  border-left: 1px dotted #999;
+}
+.gather-mode .note-item {
+  padding: 12px;
+}
+/* .gather-mode .note-item + .note-item {
+  border-top: 1px dotted #ccc;
+} */
+
+
+
+.write-mode .category-list,
+.gather-mode .date-list,
+.gather-mode .cate-list {
+  padding: 12px 0;
+  margin: 0 24px;
+}
+
+/* .write-mode  .category-list  */
+.tag {
+  /* background: #e8e8e8; */
+  /* background: rgba(170, 219,45,  0.3); */
+  /* background: #44d87f; */
+  background: #999;
+  border-radius: 2px;
+  color: #fff;
+  padding: 0.1em 0.2em;
+  margin-right: 5px;
+  /* margin-bottom: 5px; */
+  font-size: 0.9em;
+  color: #fff;
+  display: inline-block;
+}
+.tag.active {
+  color: #000;
 }
