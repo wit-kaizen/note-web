@@ -10,7 +10,7 @@ class AppSider extends React.Component {
     return (
       <nav className="app-sider">
         <div className="title">
-          Yefei's kaizen
+          Yefei's note
         </div>
         <ul>
           <li>小记</li>
