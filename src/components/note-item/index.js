@@ -1,13 +1,11 @@
 import React from 'react';
+
 import './index.css';
+
 import utils from '../../utils';
 import NoteDao from '../../database/note';
 
 class NoteItem extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
   delNote(note) {
     const id = note.id;
     NoteDao.delete(id, this.props.handleNoteDeleted(id))
@@ -19,7 +17,7 @@ class NoteItem extends React.Component {
     let match;
     let pos = 0;
 
-    while(match = reg.exec(str)) {
+    while(!!(match = reg.exec(str))) {
       let url = match[0];
       let index = match.index;
       if(index > pos) {
@@ -34,19 +32,19 @@ class NoteItem extends React.Component {
 
   render () {
     // TODO
-    // 1. 为什么hover会导致日期都懂
-    // 2. 如何解决删除后的震动问题
+    // 1. 为什么hover会导致日期都移动
+    // 2. 解决删除后的震动问题
     const { data:d } = this.props;
     return (
       <div className="note-item">
         <p className="desc-row">
           <span className="create-date">创建于 {utils.formatDate(Number(d.createAt))}</span>
           <span className="operation">
-            <a href="#" className="btn del" onClick={() => { this.delNote(d)}}>❌ </a>
+            <span href="#" className="btn del" onClick={() => { this.delNote(d)} }>❌ </span>
           </span>
         </p>
         <p className={d.done ? 'content-row deleted' : 'content-row'}>
-          {d.category == 'n/a' ? '' : <span className="tag">{d.category}</span>}
+          {d.category && d.category[0] === 'n/a' ? '' : <span className="tag">{d.category}</span>}
           {this.generateContent(d.content)}
         </p>
       </div>

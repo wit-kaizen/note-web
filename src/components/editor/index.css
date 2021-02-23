@@ -1,5 +1,3 @@
-.editor {
-}
 .editor textarea {
   width: 100%;
   padding: 12px;
@@ -9,16 +7,19 @@
   border: 1px solid #e4e4e4;
   outline: none;
 }
-.editor .btn {
-  background-color: #25b864;
-  border-radius: 4px;
-  color: #fff;
-  border: none;
+.editor button {
   font-size: 14px;
   padding: 4px 12px;
-  cursor: pointer;
 }
-.editor .btn:hover {
+.editor button:not([disabled]) {
+  background-color: #25b864;
+  color: #fff;
+  border-color: transparent;
+  /* TODO 上面的border-color设置#25b864以后会导致很奇怪的效果 */
+  /* TODO 下面的border-radius 在disabled起作用会导致非常奇怪的效果 */
+  border-radius: 4px;
+}
+.editor button:not([disabled]):hover {
   background-color: #47c479;
 }
 .editor span {

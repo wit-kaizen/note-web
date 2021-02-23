@@ -1,12 +1,15 @@
 import IndexedDB from './indexed-db.js';
 
+IndexedDB.openDB('kaizen', 'notes', 1);
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAll: function(callback) {
-    IndexedDB.openDB('kaizen', 'notes', 1);
+    // 延迟2s 因为还没打开
     setTimeout(() => {
       IndexedDB.searchAll('notes', result => {
-        callback(result)
+        result.sort((a,b) => b.createAt - a.createAt)
+        callback(result);
       })
     }, 2000)
   },
