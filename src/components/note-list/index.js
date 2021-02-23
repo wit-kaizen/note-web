@@ -1,16 +1,13 @@
-import React from 'react';
-
 import './index.css';
 
 import NoteItem from '../note-item';
-class NoteList extends React.Component {
-  render () {
-    return (
-      <div className="note-list">
-        { this.props.datas.map(d => (<NoteItem handleNoteDeleted={this.props.handleNoteDeleted} data={d} key={d.createAt} />)) }
-      </div>
-    );
-  }
+
+function NoteList (props) {
+  return (
+    <div className="note-list">
+      { props.datas.map(d => (<NoteItem handleNoteDeleted={props.handleNoteDeleted} data={d} key={d.createAt} />)) }
+    </div>
+  );
 }
 
 export default NoteList;

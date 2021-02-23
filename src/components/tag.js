@@ -1,15 +1,7 @@
-import React from 'react';
+function Tag(props) {
+  const { text, defaultText, isActive, handleClick } = props;
 
-class Tag extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { text, defaultText, isActive, handleClick } = this.props;
-
-    return <span data-text={text} className={isActive ? 'tag active' : 'tag' } onClick={() => handleClick(text)}>{text || defaultText}</span>
-  }
+  return <span data-text={text} className={isActive ? 'tag active' : 'tag' } onClick={() => handleClick(text)}>{text || defaultText}</span>
 }
 
 export default Tag;
