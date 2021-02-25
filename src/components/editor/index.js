@@ -49,7 +49,9 @@ class Editor extends React.Component {
         Object.assign(item, { id });
         this.setState({
           input: '',
-        }, this.props.handleNoteAdded(item));
+        }, () => {
+          window.mb.emit('noteAdded', item);
+        });
       });
     }
   }
