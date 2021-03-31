@@ -1,10 +1,10 @@
 import AppHeader from './components/header';
 import AppBody from './components/body';
 import AppSider from './components/sider';
-import AppMainEditor from './components/editor';
-import AppMainNoteList from './components/note-list';
-import './utils/message-bus';
+import AppEditor from './components/editor';
+import AppNoteList from './components/note-list';
 
+import './utils/message-bus';
 import './App.css';
 
 function App () {
@@ -13,9 +13,9 @@ function App () {
       <AppSider/>
       <AppBody>
         <AppHeader/>
-        <div className="app-body__main">
-          <AppMainEditor handleNoteAdded={(note) => { this.handleNoteAdded(note) }}/>
-          <AppMainNoteList />
+        <div className="main">
+          <AppEditor handleNoteAdded={(note) => { this.handleNoteAdded(note) }}/>
+          <AppNoteList />
         </div>
       </AppBody>
     </div>

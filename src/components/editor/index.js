@@ -13,8 +13,8 @@ class Editor extends React.Component {
 
     this.state = {
       input: '',
-      textRef: null,
     }
+    this.textRef = React.createRef();
     this.handleNoteSave = this.handleNoteSave.bind(this);
     this.listenKeyboard = this.listenKeyboard.bind(this);
 
@@ -25,7 +25,7 @@ class Editor extends React.Component {
     document.addEventListener('keydown', (e) => {
       // 聚焦在textarae上，并且按cmd+enter，有非空内容才提交
       if (
-        e.target === this.state.textRef
+        e.target === this.textRef.current
         && e.metaKey
         && e.keyCode === CHAR_ENTER_KEYCODE
         && this.state.input && this.state.input.trim()
@@ -61,7 +61,7 @@ class Editor extends React.Component {
     return (
       <div className="editor">
         <textarea
-          ref={(input) => { this.state.textRef = input; }}
+          ref={this.textRef}
           value={input}
           placeholder="请输入内容…"
           onChange={(e) => { this.handleInputChange(e) }} />
