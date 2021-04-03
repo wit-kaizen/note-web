@@ -13,10 +13,10 @@ function App () {
       <AppSider/>
       <AppBody>
         <AppHeader/>
-        <div className="main">
+        <main>
           <AppEditor handleNoteAdded={(note) => { this.handleNoteAdded(note) }}/>
           <AppNoteList />
-        </div>
+        </main>
       </AppBody>
     </div>
   );
