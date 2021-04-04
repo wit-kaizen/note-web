@@ -1,44 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './index.css';
 import NoteItem from '../note-item';
 import NoteDao from '../../database/note';
 
-class NoteList extends React.Component {
-  constructor(props){
-    super(props);
+function NoteList() {
+  const [ noteList, setNoteList ] = useState([]);
 
-    this.state = {
-      loading: true,
-      noteList: [],
-    }
-    this.handleNoteDeleted = this.handleNoteDeleted.bind(this);
+  const handleNoteDeleted = (note) => {
+    setNoteList([note, ...noteList])
   }
 
-  componentDidMount() {
-    NoteDao.getAll((noteList) => { this.setState({ loading: false, noteList }) });
-
-    window.mb.addListener('noteAdded', note => {
-      this.setState({
-        noteList: [note, ...this.state.noteList],
-      });
+  useEffect(() => {
+    NoteDao.getAll((noteList) => {
+      setNoteList(noteList);
     });
-  }
 
-  handleNoteDeleted(deletedId) {
-    this.setState({
-      noteList: this.state.noteList.filter(d => d.id !== deletedId),
+    window.mb.addListener('noteAdded', (note) => {
+      setNoteList((prevList)=>[note, ...prevList])
     });
-  }
+  }, [])
 
-  render () {
-    return (
-      <div className="note-list">
-        { this.state.noteList.map(d => (<NoteItem handleNoteDeleted={this.handleNoteDeleted} data={d} key={d.createAt} />)) }
-      </div>
-    );
-  }
+  return (
+    <div className="note-list">
+      { noteList.map(d => (<NoteItem handleNoteDeleted={handleNoteDeleted} data={d} key={d.createAt} />)) }
+    </div>
+  )
 }
-
 
 export default NoteList;

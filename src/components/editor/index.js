@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import './index.css';
 
@@ -7,78 +7,58 @@ import NoteDao from '../../database/note';
 
 const CHAR_ENTER_KEYCODE = 13;
 
-class Editor extends React.Component {
-  constructor(props) {
-    super(props);
+function Editor() {
+  const [input, setInput] = useState('');
+  const textRef = useRef();
 
-    this.state = {
-      input: '',
-    }
-    this.textRef = React.createRef();
-    this.handleNoteSave = this.handleNoteSave.bind(this);
-    this.listenKeyboard = this.listenKeyboard.bind(this);
+  const handleNoteSave = () => {
+    const item = Note.createFromText(input);
 
-    this.listenKeyboard();
+    NoteDao.add(item, (id) => {
+      Object.assign(item, { id });
+      setInput('');
+      window.mb.emit('noteAdded', item);
+    });
   }
 
-  listenKeyboard() {
+  const handleInputChange = (e) =>  {
+    setInput( e.target.value);
+  }
+
+  useEffect(() => {
     document.addEventListener('keydown', (e) => {
       // 聚焦在textarae上，并且按cmd+enter，有非空内容才提交
       if (
-        e.target === this.textRef.current
+        e.target === textRef.current
         && e.metaKey
         && e.keyCode === CHAR_ENTER_KEYCODE
-        && this.state.input && this.state.input.trim()
+        && input && input.trim()
       ) {
-        this.handleNoteSave();
+        handleNoteSave();
       }
     });
-  }
+  })
 
-  handleInputChange(e) {
-    this.setState({
-      input: e.target.value
-    });
-  }
+  return (
+    <div className="editor">
+      <textarea
+        ref={textRef}
+        value={input}
+        placeholder="请输入内容…"
+        onChange={handleInputChange} />
 
-  handleNoteSave() {
-    if (this.state.input && this.state.input.trim()) {
-      const item = Note.createFromText(this.state.input);
-
-      NoteDao.add(item, (id) => {
-        Object.assign(item, { id });
-        this.setState({
-          input: '',
-        }, () => {
-          window.mb.emit('noteAdded', item);
-        });
-      });
-    }
-  }
-
-  render() {
-    let { input } = this.state;
-    return (
-      <div className="editor">
-        <textarea
-          ref={this.textRef}
-          value={input}
-          placeholder="请输入内容…"
-          onChange={(e) => { this.handleInputChange(e) }} />
-
-        {/* TODO 无内容 设置disable的样式 */}
-        <div className="btn-row">
-          {
-            input && input.trim() ?
-            <button onClick={ () => { this.handleNoteSave(); } }> 就这样 </button>
-            :
-            <button disabled> 就这样 </button>
-          }
-          <span>按 ⌘ Enter 发送</span>
-        </div>
+      {/* TODO 无内容 设置disable的样式 */}
+      <div className="btn-row">
+        {
+          input && input.trim() ?
+          <button onClick={ () => { handleNoteSave(); } }> 就这样 </button>
+          :
+          <button disabled> 就这样 </button>
+        }
+        <span>按 ⌘ Enter 发送</span>
       </div>
-    )
-  }
+    </div>
+  );
 }
 
 export default Editor;
