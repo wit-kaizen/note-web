@@ -15,17 +15,18 @@ function  generateContent(str) {
   const res = [];
   let match;
   let pos = 0;
+  let index = 0;
 
   while(!!(match = reg.exec(str))) {
     let url = match[0];
     let index = match.index;
     if(index > pos) {
-      res.push(<span>{str.substring(pos, index)}</span>)
+      res.push(<span key={index++}>{str.substring(pos, index)}</span>)
     }
-    res.push(<a target="_blank" href={url}>{url}</a>)
+    res.push(<a key={index++} target="_blank" rel="noreferrer" href={url}>{url}</a>)
     pos = index + url.length;
   }
-  if(pos<str.length) res.push(<span>{str.substring(pos, str.length)}</span>);
+  if(pos<str.length) res.push(<span key={index++}>{str.substring(pos, str.length)}</span>);
   return res
 }
 
@@ -35,7 +36,7 @@ function NoteItem(props) {
     // 2. 解决删除后的震动问题
     const { data:d, handleNoteDeleted } = props;
     return (
-      <div className="note-item">
+      <div className="note-item" key={d.createAt}>
         <p className="desc-row">
           <span className="create-date">创建于 {utils.formatDate(Number(d.createAt))}</span>
           <span className="operation">

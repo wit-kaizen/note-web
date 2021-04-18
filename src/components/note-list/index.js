@@ -7,8 +7,10 @@ import NoteDao from '../../database/note';
 function NoteList() {
   const [ noteList, setNoteList ] = useState([]);
 
-  const handleNoteDeleted = (note) => {
-    setNoteList([note, ...noteList])
+  const handleNoteDeleted = (id) => {
+    const index = noteList.findIndex(d => d.id === id);
+    noteList.splice(index, 1)
+    setNoteList([...noteList])
   }
 
   useEffect(() => {
@@ -20,10 +22,14 @@ function NoteList() {
       setNoteList((prevList)=>[note, ...prevList])
     });
   }, [])
-
+  let hash = {}
+  noteList.forEach(d => {
+    hash[d.createAt] = hash[d.createAt] !== undefined ? true : false;
+  });
+  console.log(hash);
   return (
     <div className="note-list">
-      { noteList.map(d => (<NoteItem handleNoteDeleted={handleNoteDeleted} data={d} key={d.createAt} />)) }
+      { noteList.map(d => (<NoteItem handleNoteDeleted={handleNoteDeleted} data={d} key={d.createAt.toString()} />)) }
     </div>
   )
 }

@@ -1,12 +1,10 @@
 var db = null;
 
-export default {
+const IndexedDB = {
   indexedDB: window.indexedDB || window.webkitindexedDB || window.msIndexedDB || window.mozIndexedDB,
 
   openDB(dbname, objectStoreName, version, onSuccess) {
-    var version = version || 1
-
-    var request = this.indexedDB.open(dbname, version)
+    var request = this.indexedDB.open(dbname, version || 1)
 
     request.onerror = function(event) {
         console.log('IndexedDB数据库打开错误')
@@ -49,7 +47,7 @@ export default {
 
   add(objectStoreName, argument, callback) {
     if (db != null) {
-        console.log(db, argument)
+        // console.log(db, argument)
 
         // 执行事务，添加数据到对象仓库（表）
         var request = db.transaction([objectStoreName], 'readwrite')
@@ -57,7 +55,7 @@ export default {
             .add(argument);
 
         request.onsuccess = function(event) {
-            console.log('数据写入成功', event);
+            // console.log('数据写入成功', event);
             callback(event.target.result);
         };
 
@@ -68,7 +66,7 @@ export default {
   },
   foreach: function(objectStoreName) {
     if (db != null){
-        console.log(db)
+        // console.log(db)
 
         // 执行事务，从对象仓库（表）中获取所有数据
         var request = db.transaction([objectStoreName], 'readwrite')
@@ -97,7 +95,7 @@ export default {
 
   searchAll: function(objectStoreName, callback/*, index, data*/) {
     if (db != null){
-        console.log(db)
+        // console.log(db)
 
         // 执行事务，从对象仓库（表）中获取所有数据
         var request = db.transaction([objectStoreName], 'readonly')
@@ -124,7 +122,7 @@ export default {
 
   delete(objectStoreName, id, callback = ()=>{}) {
     if (db != null){
-        console.log(db)
+        // console.log(db)
 
         // 执行事务，从对象仓库（表）中获取所有数据
         var request = db.transaction([objectStoreName], 'readwrite')
@@ -151,7 +149,7 @@ export default {
 
   update: function(objectStoreName, argument, callback) {
     if (db != null) {
-        console.log(db)
+        // console.log(db)
 
         // 执行事务，添加数据到对象仓库（表）
         var request = db.transaction([objectStoreName], 'readwrite')
@@ -168,6 +166,6 @@ export default {
         }
     }
   },
-
-
 }
+
+export default IndexedDB;

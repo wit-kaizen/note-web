@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 import './index.css';
 
@@ -11,9 +11,12 @@ function Editor() {
   const [input, setInput] = useState('');
   const textRef = useRef();
 
-  const handleNoteSave = () => {
-    const item = Note.createFromText(input);
+  const handleInputChange = (e) =>  {
+    setInput( e.target.value);
+  }
 
+  const handleNoteSave = (input) => {
+    const item = Note.createFromText(input);
     NoteDao.add(item, (id) => {
       Object.assign(item, { id });
       setInput('');
@@ -21,23 +24,25 @@ function Editor() {
     });
   }
 
-  const handleInputChange = (e) =>  {
-    setInput( e.target.value);
-  }
+  const handleNoteSaveShortcut = useCallback(e => {
+    // 聚焦在textarae上，并且按cmd+enter，有非空内容才提交
+    if (
+      e.target === textRef.current
+      && e.metaKey
+      && e.keyCode === CHAR_ENTER_KEYCODE
+      && input && input.trim()
+    ) {
+      handleNoteSave(input);
+    }
+  }, [input])
+
 
   useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      // 聚焦在textarae上，并且按cmd+enter，有非空内容才提交
-      if (
-        e.target === textRef.current
-        && e.metaKey
-        && e.keyCode === CHAR_ENTER_KEYCODE
-        && input && input.trim()
-      ) {
-        handleNoteSave();
-      }
-    });
-  })
+    document.addEventListener('keydown', handleNoteSaveShortcut);
+    return () => {
+      document.removeEventListener('keydown', handleNoteSaveShortcut);
+    }
+  }, [handleNoteSaveShortcut])
 
   return (
     <div className="editor">
