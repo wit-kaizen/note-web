@@ -40,7 +40,7 @@ function NoteItem(props) {
         <p className="desc-row">
           <span className="create-date">创建于 {utils.formatDate(Number(d.createAt))}</span>
           <span className="operation">
-            <span href="#" className="btn del" onClick={() => { delNote(d, handleNoteDeleted)} }>❌ </span>
+            <span className="btn del" onClick={() => { delNote(d, handleNoteDeleted)} }>❌ </span>
           </span>
         </p>
         <p className={d.done ? 'content-row deleted' : 'content-row'}>

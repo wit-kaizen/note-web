@@ -18,7 +18,7 @@ function NoteList() {
       setNoteList(noteList);
     });
 
-    window.mb.addListener('noteAdded', (note) => {
+    window.mb.listen('noteAdded', (note) => {
       setNoteList((prevList)=>[note, ...prevList])
     });
   }, [])

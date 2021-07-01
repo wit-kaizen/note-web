@@ -15,12 +15,12 @@ function Editor() {
     setInput(e.target.value)
   }
 
-  const handleNoteSave = (input) => {
+  const handleNoteSave = () => {
     const item = Note.createFromText(input)
     NoteDao.add(item, (id) => {
       Object.assign(item, { id })
       setInput('')
-      window.mb.emit('noteAdded', item)
+      window.mb.emit('noteAdded', item);
     })
   }
 
@@ -34,7 +34,7 @@ function Editor() {
         input &&
         input.trim()
       ) {
-        handleNoteSave(input)
+        handleNoteSave()
       }
     },
     [input],
