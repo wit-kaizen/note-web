@@ -14,7 +14,7 @@ function App () {
       <AppBody>
         <AppHeader/>
         <main>
-          <AppEditor handleNoteAdded={(note) => { this.handleNoteAdded(note) }}/>
+          <AppEditor/>
           <AppNoteList />
         </main>
       </AppBody>
