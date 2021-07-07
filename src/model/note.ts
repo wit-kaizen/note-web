@@ -5,6 +5,7 @@ export default class Note {
     createAt: Number
     done: Boolean
   */
+  id?: number
   category: string[]
   content: string
   createAt: number

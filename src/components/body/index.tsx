@@ -1,6 +1,9 @@
 import './index.css';
 
-function AppBody(props) {
+interface Props {
+  children: React.ReactNode
+}
+function AppBody(props: Props) {
   return (
     <div className="app-body">
       {props.children}

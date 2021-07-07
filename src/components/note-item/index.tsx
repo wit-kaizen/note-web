@@ -4,13 +4,14 @@ import './index.css';
 
 import utils from '../../utils';
 import NoteDao from '../../database/note';
+import Note from '../../model/note';
 
-function delNote(note, handler) {
+function delNote(note: Note, handler: Function) {
   const id = note.id;
-  NoteDao.delete(id, handler(id))
+  NoteDao.delete(id as number, () => handler(id))
 }
 
-function  generateContent(str) {
+function  generateContent(str: string) {
   const reg = /(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/[^\s]*)?(\?[^\s]*)?(#[^\s]*)?/g;
   const res = [];
   let match;
@@ -30,7 +31,12 @@ function  generateContent(str) {
   return res
 }
 
-function NoteItem(props) {
+interface Props {
+  data: Note,
+  handleNoteDeleted: Function,
+}
+
+function NoteItem(props: Props) {
     // TODO
     // 1. 为什么hover会导致日期都移动
     // 2. 解决删除后的震动问题

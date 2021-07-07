@@ -4,5 +4,19 @@ interface EventEmitter {
 }
 
 interface Window {
-  mb: EventEmitter
+  mb: typeof EventEmitter
+}
+
+declare module 'manba' {
+  function _Manba(): any
+  function manba(p?: number): _Manba
+  namespace _Manba {
+    function distance(): number
+    function format(reg: string): string
+  }
+  namespace manba {
+    export const DAY: string
+    export const YEAR: string
+  }
+  export default manba
 }

@@ -9,15 +9,11 @@ const CHAR_ENTER_KEYCODE = 13
 
 function Editor() {
   const [input, setInput] = useState('')
-  const textRef = useRef()
-
-  const handleInputChange = (e) => {
-    setInput(e.target.value)
-  }
+  const textRef = useRef<HTMLTextAreaElement>(null)
 
   const handleNoteSave = () => {
     const item = Note.createFromText(input)
-    NoteDao.add(item, (id) => {
+    NoteDao.add(item, (id: number) => {
       Object.assign(item, { id })
       setInput('')
       window.mb.emit('noteAdded', item);
@@ -53,7 +49,7 @@ function Editor() {
         ref={textRef}
         value={input}
         placeholder="请输入内容…"
-        onChange={handleInputChange}
+        onChange={(e) => { setInput(e.target.value); }}
       />
 
       {/* TODO 无内容 设置disable的样式 */}

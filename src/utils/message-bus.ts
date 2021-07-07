@@ -1,13 +1,13 @@
 class EventEmitter {
-  m = {}
+  m: any = {}
 
-  listen(name, handler) {
+  listen(name: string, handler: Function) {
     this.m[name] = this.m[name] || []
     this.m[name].push(handler)
   }
-  emit(name, data) {
+  emit(name: string, data: any) {
     if (this.m[name]) {
-      this.m[name].forEach((h) => {
+      this.m[name].forEach((h: Function) => {
         h(data)
       })
     }
